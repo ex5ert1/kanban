@@ -1,10 +1,10 @@
 package ru.kanban;
 
 public abstract class Task {
-    protected String name;
-    protected String description;
-    protected int id;
-    protected Status status;
+    private String name;
+    private String description;
+    private int id;
+    private Status status;
 
     public Task(String name, String description, Status status) {
         this.name = name;
@@ -21,8 +21,7 @@ public abstract class Task {
     }
 
     public String getDescription() {
-        var description1 = description;
-        return description1;
+        return description;
     }
 
     public void setDescription(String description) {
@@ -32,6 +31,7 @@ public abstract class Task {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
