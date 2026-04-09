@@ -1,4 +1,9 @@
-package ru.kanban;
+package ru.kanban.manager;
+
+import ru.kanban.model.Status;
+import ru.kanban.model.Epic;
+import ru.kanban.model.SimpleTask;
+import ru.kanban.model.Subtask;
 
 import java.util.*;
 import java.util.stream.Collectors;

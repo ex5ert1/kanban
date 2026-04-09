@@ -1,5 +1,11 @@
 package ru.kanban;
 
+import ru.kanban.manager.TaskManager;
+import ru.kanban.model.Epic;
+import ru.kanban.model.SimpleTask;
+import ru.kanban.model.Status;
+import ru.kanban.model.Subtask;
+
 public class Main {
     public static void main(String[] args) {
         TaskManager manager = new TaskManager();

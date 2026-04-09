@@ -1,4 +1,4 @@
-package ru.kanban;
+package ru.kanban.model;
 
 public abstract class Task {
     private String name;

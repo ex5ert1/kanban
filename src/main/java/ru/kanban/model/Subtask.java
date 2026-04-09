@@ -1,4 +1,4 @@
-package ru.kanban;
+package ru.kanban.model;
 
 public class Subtask extends Task {
     private int epicId;
