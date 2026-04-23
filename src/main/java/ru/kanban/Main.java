@@ -1,5 +1,10 @@
 package ru.kanban;
 
+import ru.kanban.manager.TaskManager;
+import ru.kanban.model.Epic;
+import ru.kanban.model.SimpleTask;
+import ru.kanban.model.Status;
+import ru.kanban.model.Subtask;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,6 +25,7 @@ public class Main {
 
         System.out.println("\nВсе эпики:");
         manager.getAllEpics().forEach(e -> System.out.println(e.getName() + " - " + e.getStatus()));
+
         System.out.println("\nПодзадачи эпика " + epic1.getName() + ":");
         manager.getSubtasksByEpicId(epic1.getId()).forEach(s -> System.out.println(s.getName() + " - " + s.getStatus()));
 
