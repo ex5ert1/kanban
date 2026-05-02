@@ -1,6 +1,7 @@
 package ru.kanban.manager;
 
 import ru.kanban.model.*;
+import ru.kanban.exception.*;
 
 import java.util.*;
 
@@ -34,7 +35,7 @@ public class InMemoryTaskManager implements TaskManager {
     public SimpleTask getSimpleTaskById(int id) {
         SimpleTask task = simpleTasks.get(id);
         if (task == null) {
-            throw new NoSuchElementException("Задача с id " + id + " не найдена");
+            throw new TaskNotFoundException("Задача с id " + id + " не найдена");
         }
         addToHistory(task);
         return task;
@@ -44,7 +45,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Epic getEpicById(int id) {
         Epic epic = epics.get(id);
         if (epic == null) {
-            throw new NoSuchElementException("Эпик с id " + id + " не найден");
+            throw new EpicNotFoundException("Эпик с id " + id + " не найден");
         }
         addToHistory(epic);
         return epic;
@@ -54,7 +55,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Subtask getSubtaskById(int id) {
         Subtask subtask = subtasks.get(id);
         if (subtask == null) {
-            throw new NoSuchElementException("Подзадача с id " + id + " не найдена");
+            throw new SubtaskNotFoundException("Подзадача с id " + id + " не найдена");
         }
         addToHistory(subtask);
         return subtask;
@@ -70,10 +71,15 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public SimpleTask updateSimpleTask(SimpleTask updatedTask) {
         if (!simpleTasks.containsKey(updatedTask.getId())) {
-            throw new NoSuchElementException("Невозможно обновить: задача не существует");
+            throw new UpdateException("Невозможно обновить: задача не существует");
         }
         simpleTasks.put(updatedTask.getId(), updatedTask);
         return updatedTask;
+    }
+
+    @Override
+    public void deleteAllSimpleTasks() {
+        simpleTasks.clear();
     }
 
     @Override
@@ -87,7 +93,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Epic updateEpic(Epic updatedEpic) {
         Epic saved = epics.get(updatedEpic.getId());
         if (saved == null) {
-            throw new NoSuchElementException("Невозможно обновить: эпик не найден");
+            throw new EpicNotFoundException("Невозможно обновить: эпик не найден");
         }
         saved.setName(updatedEpic.getName());
         saved.setDescription(updatedEpic.getDescription());
@@ -98,7 +104,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Subtask createSubtask(Subtask subtask) {
         Epic epic = epics.get(subtask.getEpicId());
         if (epic == null) {
-            throw new NoSuchElementException("Нельзя создать подзадачу без существующего эпика");
+            throw new InvalidEpicForSubtaskException("Нельзя создать подзадачу без существующего эпика");
         }
         subtask.setId(generateId());
         subtasks.put(subtask.getId(), subtask);
@@ -110,7 +116,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask updateSubtask(Subtask updatedSubtask) {
         if (!subtasks.containsKey(updatedSubtask.getId())) {
-            throw new NoSuchElementException("Невозможно обновить: подзадача не найдена");
+            throw new SubtaskNotFoundException("Невозможно обновить: подзадача не найдена");
         }
         subtasks.put(updatedSubtask.getId(), updatedSubtask);
         updateEpicStatus(updatedSubtask.getEpicId());
@@ -198,11 +204,6 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<SimpleTask> getAllSimpleTasks() {
         return new ArrayList<>(simpleTasks.values());
-    }
-
-    @Override
-    public void deleteAllSimpleTasks() {
-        simpleTasks.clear();
     }
 
     @Override
