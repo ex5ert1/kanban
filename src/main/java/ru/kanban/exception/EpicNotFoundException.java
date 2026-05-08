@@ -1,6 +1,6 @@
 package ru.kanban.exception;
 
-public class EpicNotFoundException extends RuntimeException {
+public class EpicNotFoundException extends NotFoundException {
     public EpicNotFoundException(String message) {
         super(message);
     }

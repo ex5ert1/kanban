@@ -1,6 +1,6 @@
 package ru.kanban.exception;
 
-public class InvalidEpicForSubtaskException extends RuntimeException {
+public class InvalidEpicForSubtaskException extends TaskManagerException {
     public InvalidEpicForSubtaskException(String message) {
         super(message);
     }

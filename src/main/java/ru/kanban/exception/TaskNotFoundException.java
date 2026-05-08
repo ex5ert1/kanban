@@ -1,6 +1,6 @@
 package ru.kanban.exception;
 
-public class TaskNotFoundException extends RuntimeException {
+public class TaskNotFoundException extends NotFoundException {
     public TaskNotFoundException(String message) {
         super(message);
     }
